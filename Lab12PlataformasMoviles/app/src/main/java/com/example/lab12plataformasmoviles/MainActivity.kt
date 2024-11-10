@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -23,66 +27,40 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.lab12plataformasmoviles.ui.theme.Lab12PlataformasMovilesTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            Lab12PlataformasMovilesTheme {
-                Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .windowInsetsPadding(WindowInsets.safeContent)
-                ) { innerPadding ->
-                    MainScreen(modifier = Modifier.padding(innerPadding))
+            // Lista para almacenar las ubicaciones y fotos
+            var locationList by remember { mutableStateOf(listOf<LocationPhoto>()) }
+            val navController = rememberNavController()
+
+            NavHost(
+                navController = navController,
+                startDestination = "location_screen"
+            ) {
+                composable("location_screen") {
+                    LocationScreen(
+                        onSaveLocation = { newLocation ->
+                            // Agregar nueva ubicación a la lista
+                            locationList = locationList + newLocation
+                        },
+                        onNavigateToUbicaciones = {
+                            navController.navigate("ubicaciones_screen")
+                        }
+                    )
+                }
+                composable("ubicaciones_screen") {
+                    UbicacionesScreen(locations = locationList)
                 }
             }
         }
     }
 }
 
-@Composable
-fun MainScreen(modifier: Modifier) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding()
-    ) {
-        Text(
-            text = "SafeTrail",
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.LightGray)
-                .padding(vertical = 8.dp),
-            color = Color.Blue,
-            textAlign = TextAlign.Center
-        )
 
-        Text(
-            text = "Encuentrate!",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(4.dp),
-            color = Color.Black
-        )
-        LocationScreen()
-
-        Text(
-            text = "Galeria para saber donde estas!",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(top = 12.dp, bottom = 8.dp),
-            color = Color.Black
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun previewMainScreen(){
-    MainScreen(modifier = Modifier.padding())
-}
