@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Lab12PlataformasMoviles"
 include(":app")
+include("Application")

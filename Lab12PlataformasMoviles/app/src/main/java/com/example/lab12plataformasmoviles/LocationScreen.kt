@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.ui.Alignment
@@ -115,7 +116,7 @@ fun LocationScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            color = Color.Blue,
+            color = Color(0xFF228B22),
             textAlign = TextAlign.Center
         )
 
@@ -131,7 +132,11 @@ fun LocationScreen(
                     else -> requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF556B2F),
+                contentColor = Color.White
+            ),
         ) {
             Text("Obtener Coordenadas")
         }
@@ -141,7 +146,12 @@ fun LocationScreen(
 
         Button(
             onClick = { capturePhotoLauncher.launch() },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF556B2F),
+                contentColor = Color.White
+            ),
+
         ) {
             Text("Tomar Foto")
         }
@@ -185,7 +195,11 @@ fun LocationScreen(
                     showConfirmationMessage = false
                 }
             },
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF556B2F),
+                contentColor = Color.White
+            ),
         ) {
             Text("Guardar Ubicación y Foto")
         }
@@ -201,7 +215,10 @@ fun LocationScreen(
 
         Button(
             onClick = onNavigateToUbicaciones,
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF6B8E23),
+                contentColor = Color.White
+            ),
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
         ) {
             Text("Ver Lista de Ubicaciones", color = Color.White)
